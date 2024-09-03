@@ -2,9 +2,9 @@ const path = require('path');
 const express = require('express');
 
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user')
 
 const app = express();
@@ -39,7 +39,9 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoConnect(() => {
-  app.listen(3000);
-});
-
+mongoose
+  .connect('mongodb+srv://srgibosque:NNQ3XHX3%40!8Nyrn@cluster0.oyxb5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+  .then(result => {
+    app.listen(3000);
+  })
+  .catch(err => console.error(err));
