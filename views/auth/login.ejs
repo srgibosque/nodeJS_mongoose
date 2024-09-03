@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../shared/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+  <header class="main-header">
+    <%- include('../shared/nav.ejs') %>
+  </header>
+
+  <main>
+    <form class="login-form" action="/login" method="POST">
+
+      <div class="form-control">
+        <label for="title">Email</label>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          >
+      </div>
+
+      <div class="form-control">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          name="password" 
+          id="password" 
+          >
+      </div>
+      
+      <button type="submit" class="primary-btn">
+        Login
+      </button>
+    </form>
+  </main>
+
+</body>
+
+</html>
