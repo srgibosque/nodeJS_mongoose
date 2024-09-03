@@ -14,7 +14,8 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
 
-  const product = new Product({ title: title, imageUrl: imageUrl, price: price, description: description });
+  // passing the entire user object, which we saved in the request. Mongoose takes automaitaclly the reference to the id
+  const product = new Product({ title: title, imageUrl: imageUrl, price: price, description: description, userId: req.user });
   product
     // the save method is provide by mongoose
     .save()
