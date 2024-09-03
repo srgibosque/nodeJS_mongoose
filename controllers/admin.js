@@ -16,7 +16,7 @@ exports.postAddProduct = (req, res, next) => {
 
   const product = new Product({ title: title, imageUrl: imageUrl, price: price, description: description });
   product
-  // the save method is provide by mongoose
+    // the save method is provide by mongoose
     .save()
     .then((result) => {
       console.log('Created product');
@@ -52,11 +52,15 @@ exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
 
-  console.log('Incoming request:', req.method, req.url, req.params);
-  const product = new Product(updatedTitle, updatedPrice, updatedImageUrl, updatedDescription, prodId);
-  console.log(product);
-  product
-    .save()
+  Product.findById(prodId)
+    .then(product => {
+      product.title = updatedTitle;
+      product.price = updatedPrice;
+      product.description = updatedDescription;
+      product.imageUrl = updatedImageUrl;
+      // If the product already exists save method works as an update and not a create operation. Thanks to mongoose
+      return product.save()
+    })
     .then(result => {
       console.log("Product successfully updated");
       res.redirect('/admin/products');
@@ -77,7 +81,7 @@ exports.postDeleteProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   // we shall retriev only the products for one user
   Product
-    .fetchAll()
+    .find()
     .then((products) => {
       res.render('admin/products', {
         prods: products,
